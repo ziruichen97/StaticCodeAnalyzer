@@ -1,0 +1,99 @@
+<h2>Assert statement</h2>
+<html><body><p>Testing exists in a great variety of programming languages, its aim is to check whether your code contains errors and if so, what their causes are. It does not have to be hard, you can start with easy steps. In this topic, we are going to deal with the <strong>assert statement</strong>. It is a useful debugging tool that uses Boolean logic and checks whether a given expression is true or false. If the condition is <code class="language-python">True</code>, the program will keep running. Otherwise, it will return the <code class="language-python">AssertionError</code>.</p>
+<h5 id="syntax-of-assert-statements" style="text-align: center;">Syntax of assert statements</h5>
+<p>The <code class="language-python">assert</code> keyword can be used in two ways.</p>
+<pre><code class="language-python"># 1
+assert &lt;condition&gt;
+
+# 2
+assert &lt;condition&gt;, &lt;message&gt;</code></pre>
+<p>The <code class="language-python">&lt;condition&gt;</code> attribute shows what you want to test, so it is always required. When the condition is false, the <code class="language-python">AssertionError</code> is raised. The optional <code class="language-python">&lt;message&gt;</code> attribute may be used to specify the message displayed with the error. Now let's illustrate assert statements in action.</p>
+<pre><code class="language-python"># 1
+word = input("Enter a word: ")
+assert word != "cat"
+print("Your word is", word)
+
+# 2
+word = input("Enter a word: ")
+message = "'cat' is the wrong word!"
+assert word != "cat", message
+print("Your word is", word)</code></pre>
+<p>For instance, if you enter the word <code class="language-python">dog</code> in both examples, the condition <code class="language-python">word != 'cat'</code> will be <code class="language-python">True</code>, and you will have the following output:</p>
+<pre><code class="language-python"># Your word is dog</code></pre>
+<p>However, if you happen to enter <code class="language-python">cat</code>, the <code class="language-python">AssertionError</code> will be raised. In the second case, an error message will also appear.</p>
+<pre><code class="language-python"># 1
+# Traceback (most recent call last):
+#   File "main.py", line 2, in &lt;module&gt;
+#     assert word != "cat"
+# AssertionError
+
+# 2
+# Traceback (most recent call last):
+#   File "main.py", line 3, in &lt;module&gt;
+#     assert word != "cat", message
+# AssertionError: 'cat' is the wrong word!</code></pre>
+<p>As you can see, the <code class="language-python">AssertionError</code> is a built-in error, so you can handle it with the <code class="language-python">try</code>-<code class="language-python">except</code> block, i.e. print the message without stopping the program.</p>
+<pre><code class="language-python">try:
+    word = input("Enter a word: ")
+    message = "'cat' is a wrong word!"
+    assert word != "cat", message
+    print("Your word is", word)
+except AssertionError as err:
+    print(err)  # if the word is 'cat', "'cat' is a wrong word!" is printed</code></pre>
+<p>We can also check several variables or use more sophisticated logical expressions with the help of the <code class="language-python">assert</code> keyword:</p>
+<pre><code class="language-python">x = 4
+y = 2
+assert (x ** 2 / y ** 2) - y != 2, "There are wrong values!"
+print(x, y)
+# Traceback (most recent call last):
+#   File "main.py", line 3, in 
+#     assert (x ** 2 / y ** 2) - y != 2, "There are wrong values!"
+# AssertionError: There are wrong values!</code></pre>
+<p>Finally, the <code class="language-python">assert</code> keyword can be used with functions. In the example below the <code class="language-python">AssertionError</code> is raised when the parameter <code class="language-python">2</code> given to the function does not fulfill the condition in the <code class="language-python">test_mark(i)</code>.</p>
+<pre><code class="language-python">def test_mark(i):
+    message = "This student got a bad mark!"
+    assert i &gt; 4, message
+    return i
+
+
+print(test_mark(5))  # 5
+print(test_mark(2))
+# Traceback (most recent call last):
+#   File "main.py", line 7, in 
+#     print(test_mark(i))
+#   File "main.py", line 3, in test_mark
+#     assert i &gt; 4, message
+# AssertionError: This student got a bad mark!</code></pre>
+<h5 id="assert-vs-raise" style="text-align: center;">Assert vs Raise</h5>
+<p>You may have noticed that <code class="language-python">raise</code> and <code class="language-python">assert</code> are similar to each other. What is the actual difference between them?</p>
+<ul>
+<li><code class="language-python">raise</code> is used for raising an exception;</li>
+<li><code class="language-python">assert</code> is used for raising an exception if the given condition is <code class="language-python">False</code>.</li>
+</ul>
+<p>Let's analyze some examples.</p>
+<pre><code class="language-python">word = input("Enter a word: ")
+if word != "cat":
+    print(word)
+else:
+    raise Exception("There is a wrong word!")</code></pre>
+<p>As you can see, the <code class="language-python">raise</code> keyword together with the <code class="language-python">if</code>-<code class="language-python">else</code> statement is very similar to the <code class="language-python">assert</code> keyword, but their purposes are different. In the first case, <code class="language-python">raise</code> is used mainly for data validation, it allows you to customize exceptions and raise errors of your choice, while <code class="language-python">assert</code> is mainly used for debugging, e. g., to stop the execution based on a certain condition and return a message that will help debug faster.</p>
+<p><a href="https://docs.python.org/3/reference/simple_stmts.html#assert" rel="noopener noreferrer nofollow" target="_blank">The Python documentation (the Assert Statement paragraph)</a> also provides an explanation of how the <code class="language-python">assert</code> keyword works. The first example shows raising the error without a message and the second one — with the message.</p>
+<pre><code class="language-python"># 1
+if __debug__:
+   if not condition: 
+       raise AssertionError
+
+# 2
+if __debug__:
+   if not condition: 
+       raise AssertionError, message</code></pre>
+<p>The <code class="language-python">__debug__</code> is a built-in variable that is <code class="language-python">True</code> by default and is only set to <code class="language-python">False</code> when Python is started in the optimization mode, so the first lines can be interpreted as <code class="language-python">if True</code>.</p>
+<p>Mind the difference between the <code class="language-python">raise</code> and the <code class="language-python">assert</code> keywords and use them wisely.</p>
+<h5 id="summary" style="text-align: center;">Summary</h5>
+<p>In this topic, you have learned some basics of the <code class="language-python">assert</code> keyword, a tool for program testing:</p>
+<ul>
+<li>the purpose of the <code class="language-python">assert</code> keyword is to check whether a condition is <code class="language-python">False</code>;</li>
+<li>to use the <code class="language-python">assert</code> keyword, we should specify the mandatory attribute <code class="language-python">&lt;condition&gt;</code> and an optional <code class="language-python">&lt;message&gt;</code>;</li>
+<li>as opposed to <code class="language-python">raise</code>, the <code class="language-python">assert</code> keyword is used for debugging.</li>
+</ul>
+<p>Now, let's proceed to the tasks.</p></body></html>

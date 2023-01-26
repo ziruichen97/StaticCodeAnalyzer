@@ -1,0 +1,18 @@
+type: choice
+is_multiple_choice: false
+options:
+- text: "bobby = GoldFish(\"Bobby\", \"golden\", \"Carassius auratus\")"
+- text: bobby = GoldFish()
+- text: bobby = GoldFish("Bobby")
+- text: "bobby = GoldFish(\"Bobby\", \"Carassius auratus\")"
+files:
+- name: main.py
+  visible: true
+  text: |+
+    #  You can experiment here, it won’t be checked
+
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/7238#comment
+status: Solved
+record: -1
+local_check: false
